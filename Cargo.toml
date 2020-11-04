@@ -5,3 +5,4 @@ edition = "2018"
 authors = ["Anielle Stellaire"]
 
 [dependencies]
+diesel = { version = "1.4.5", features = ["sqlite"] }
