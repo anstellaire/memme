@@ -8,7 +8,7 @@ use diesel::RunQueryDsl;
 use diesel::ExpressionMethods;
 use diesel::TextExpressionMethods;
 
-use super::traits::StorageManagable;
+use super::traits::DataProvider;
 
 // modules
 use super::schema; // for StorageManagable trait impl
@@ -43,7 +43,7 @@ impl DieselConnectionManager {
 //   DieselConnectionManager: StorageManagable Trait Implementation
 // -----------------------------------------------------------------------------
 
-impl StorageManagable for DieselConnectionManager {
+impl DataProvider for DieselConnectionManager {
     fn create_deck(&self, deck: &models::NewDeck) -> Result<usize,()> {
         let res = diesel::insert_into(schema::decks::dsl::decks)
             .values(deck)

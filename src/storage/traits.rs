@@ -1,6 +1,6 @@
 use super::models;
 
-pub trait StorageManagable {
+pub trait DataProvider {
     fn create_deck(&self, deck: &models::NewDeck) -> Result<usize,()>;
     fn create_cards(&self, cards: &Vec<models::NewCard>) -> Result<usize,()>;
 
