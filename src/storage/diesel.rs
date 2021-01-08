@@ -8,9 +8,8 @@ use diesel::RunQueryDsl;
 use diesel::ExpressionMethods;
 use diesel::TextExpressionMethods;
 
-use super::traits::DataProvider;
-
 // modules
+use super::traits;
 use super::schema; // for DataProvider trait impl
 use super::models; // for DataProvider trait impl
 
@@ -43,7 +42,7 @@ impl DieselDataProvider {
 //   DieselDataProvider: DataProvider Trait Implementation
 // -----------------------------------------------------------------------------
 
-impl DataProvider for DieselDataProvider {
+impl traits::DataProvider for DieselDataProvider {
     fn create_deck(&self, deck: &models::NewDeck) -> Result<usize,()> {
         let res = diesel::insert_into(schema::decks::dsl::decks)
             .values(deck)
