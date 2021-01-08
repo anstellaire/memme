@@ -11,23 +11,23 @@ use diesel::TextExpressionMethods;
 use super::traits::DataProvider;
 
 // modules
-use super::schema; // for StorageManagable trait impl
-use super::models; // for StorageManagable trait impl
+use super::schema; // for DataProvider trait impl
+use super::models; // for DataProvider trait impl
 
 // -----------------------------------------------------------------------------
-//   DieselConnectionManager
+//   DieselDataProvider
 // -----------------------------------------------------------------------------
 
-pub struct DieselConnectionManager {
+pub struct DieselDataProvider {
     connection: diesel::SqliteConnection
 }
 
 // -----------------------------------------------------------------------------
-//   DieselConnectionManager: General Implementation
+//   DieselDataProvider: General Implementation
 // -----------------------------------------------------------------------------
 
-impl DieselConnectionManager {
-    pub fn establish(dbname: &str) -> DieselConnectionManager {
+impl DieselDataProvider {
+    pub fn establish(dbname: &str) -> DieselDataProvider {
         let connection =
             diesel::SqliteConnection::establish(dbname).unwrap_or_else(|_|{
 
@@ -35,15 +35,15 @@ impl DieselConnectionManager {
             std::process::exit(1);
         });
 
-        return DieselConnectionManager{connection};
+        return DieselDataProvider{connection};
     }
 }
 
 // -----------------------------------------------------------------------------
-//   DieselConnectionManager: StorageManagable Trait Implementation
+//   DieselDataProvider: DataProvider Trait Implementation
 // -----------------------------------------------------------------------------
 
-impl DataProvider for DieselConnectionManager {
+impl DataProvider for DieselDataProvider {
     fn create_deck(&self, deck: &models::NewDeck) -> Result<usize,()> {
         let res = diesel::insert_into(schema::decks::dsl::decks)
             .values(deck)
